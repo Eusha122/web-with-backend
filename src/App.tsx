@@ -17,18 +17,27 @@ import ChessPage from './pages/ChessPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [visitors, setVisitors] = useState(0);
+  const [visitors, setVisitors] = useState<Array<{name: string, relation: string}>>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 3000);
+
+    // Load visitors from localStorage
+    const savedVisitors = localStorage.getItem('portfolioVisitors');
+    if (savedVisitors) {
+      setVisitors(JSON.parse(savedVisitors));
+    }
 
     return () => clearTimeout(timer);
   }, []);
 
-  const addVisitor = () => {
-    setVisitors(prev => prev + 1);
+  const addVisitor = (name: string, relation: string) => {
+    const newVisitor = { name, relation };
+    const updatedVisitors = [...visitors, newVisitor];
+    setVisitors(updatedVisitors);
+    localStorage.setItem('portfolioVisitors', JSON.stringify(updatedVisitors));
   };
 
   return (

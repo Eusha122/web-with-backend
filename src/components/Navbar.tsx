@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Users, Crown } from 'lucide-react';
-import VisitorModal from './VisitorModal';
 import { useNavigate } from 'react-router-dom';
+import VisitorModal from './VisitorModal';
 
 interface NavbarProps {
   visitors: Array<{name: string, relation: string}>;
