@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Users, Crown } from 'lucide-react';
 import VisitorModal from './VisitorModal';
-import ChessGameSelector from './ChessGameSelector';
+import { useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   visitors: Array<{name: string, relation: string}>;
@@ -10,11 +10,11 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ visitors, onAddVisitor }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showVisitorModal, setShowVisitorModal] = useState(false);
   const [showVisitors, setShowVisitors] = useState(false);
-  const [showChessGame, setShowChessGame] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -97,7 +97,7 @@ const Navbar: React.FC<NavbarProps> = ({ visitors, onAddVisitor }) => {
               
               {/* Play Chess Button */}
               <motion.button
-                onClick={() => setShowChessGame(true)}
+                onClick={() => navigate('/chess')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center space-x-2 px-3 xl:px-4 py-2 bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 rounded-full font-medium text-white transition-all duration-200 text-sm xl:text-base"
@@ -199,7 +199,7 @@ const Navbar: React.FC<NavbarProps> = ({ visitors, onAddVisitor }) => {
                 ))}
                 <motion.button
                   onClick={() => {
-                    setShowChessGame(true);
+                    navigate('/chess');
                     setIsOpen(false);
                   }}
                   whileTap={{ scale: 0.95 }}
@@ -231,11 +231,6 @@ const Navbar: React.FC<NavbarProps> = ({ visitors, onAddVisitor }) => {
         isOpen={showVisitorModal}
         onClose={() => setShowVisitorModal(false)}
         onSubmit={handleAddVisitor}
-      />
-
-      <ChessGameSelector
-        isOpen={showChessGame}
-        onClose={() => setShowChessGame(false)}
       />
     </>
   );
